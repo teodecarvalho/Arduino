@@ -66,6 +66,7 @@ RTC_DS3231 rtc;
 float lastIrrig = 0;
 int currentSoilMoist = 100;
 float currentTemp;
+float currentAirHumid;
 
 DateTime now;
 
@@ -90,6 +91,7 @@ void setup() {
 void loop() {
   updateNow();
   updateTemp();
+  updateAirHumid();
   checkIrrig();
   checkLight();
   checkTemp();
@@ -106,8 +108,8 @@ void loop() {
   if(msg[0] == 's' && msg[1] == '8') s8(); // Update minSoilMoist
   if(msg[0] == 's' && msg[1] == '9') s9(); // Update irrigTime
   if(msg[0] == 's' && msg[1] == 'a') updateEEPROM(); // Update EEPROM
-  showParameters();
-  delay(1000);
+  if(msg[0] == 's' && msg[1] == 'p') showParameters(); // Show all parameters
+  if(msg[0] == 's' && msg[1] == 'r') showReadings(); // Show all sensor readings  
 }
 
 void checkLight(){
@@ -200,6 +202,10 @@ void updateTemp(){
   currentTemp = dht.readTemperature();
 }
 
+void updateAirHumid(){
+  currentAirHumid = dht.readHumidity();
+}
+
 void s1(){
   drySoil = atoi(&msg[2]);
 }
@@ -245,18 +251,21 @@ void setupRTC(){
     //rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 }
 
-void showTime(){
+void showReadings(){
     Serial.print(now.hour());
     Serial.print(":");
     Serial.print(now.minute());
     Serial.print(":");
     Serial.println(now.second());
-    Serial.println(now.hour() * 60 + now.minute());
-}
-
-void showSoilMoist(){
-  Serial.print("Soil moisture (%): ");
-  Serial.println(currentSoilMoist);
+    Serial.print("Current soil moisture:");
+    Serial.println(currentSoilMoist);
+    Serial.print("Raw soil moisture reading: ");
+    Serial.println(analogRead(pinMoistSens));
+    Serial.print("Current temperature: ");
+    Serial.println(currentTemp);
+    Serial.print("Current Air Humidity: ");
+    Serial.println(currentAirHumid);
+    clearMsg();
 }
 
 void receiveMsg(){
@@ -279,6 +288,10 @@ void receiveMsg(){
   Serial.println(msg);
 }
 
+void clearMsg(){
+  for(int i = 0; i < (msgSize - 1); i++) msg[i] = '\0';
+}
+
 void updateEEPROM(){
   EEPROM.put(0, drySoil);
   EEPROM.put(2, wetSoil);
@@ -289,6 +302,7 @@ void updateEEPROM(){
   EEPROM.put(18, highTemp);
   EEPROM.put(20, minSoilMoist);
   EEPROM.put(22, irrigTime);
+  clearMsg();
 }
 
 void getEEPROM(){
@@ -322,4 +336,5 @@ void showParameters(){
   Serial.println(minSoilMoist);
   Serial.print("Irrigation time: ");
   Serial.println(irrigTime, 4);
+  clearMsg();
 }
