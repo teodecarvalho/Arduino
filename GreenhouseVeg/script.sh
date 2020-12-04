@@ -1,5 +1,4 @@
 #!/bin/bash
-rm main.py my.kv
-cp -R /media/psf/GoogleDrive/untitled/* ./
+yes | cp -rf /media/psf/Home/Downloads/Arduino/GreenhouseVeg/* .
 buildozer android debug deploy run
 adb logcat | grep python

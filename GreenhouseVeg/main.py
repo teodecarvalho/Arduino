@@ -1,7 +1,16 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.utils import platform
+from USBSerial import USBdevice
 
 class GreenhouseWidget(BoxLayout):
+    def __init__(self, **kwargs):
+        super(GreenhouseWidget, self).__init__(**kwargs)
+        self.USBdevice = USBdevice()
+
+    def connect_usb(self):
+        self.USBdevice.connect_usb()
+
     switch_parameters = {
         "drysoil":"s1",
         "wetsoil":"s2",
@@ -24,13 +33,20 @@ class GreenhouseWidget(BoxLayout):
             self.handle_wrong_input()
             return
         self.ids[parameter + "_button"].text += " (ok)"
-        self.send_cmd(f"<{self.switch_parameters[parameter]}{value}>")
+        #self.send_cmd(f"<{self.switch_parameters[parameter]}{value}>")
+        self.send_cmd("<of>")
 
     def send_cmd(self, cmd):
-        print(cmd)
-
+        self.USBdevice.serial_port.write(cmd.encode())
+    
+    def rec_msg(self):
+        self.USBdevice.serial_port.read()
+    
     def handle_wrong_input(self):
         pass
+    
+    def commit_changes(self):
+        self.send_cmd("<on>")
 
 class GreenhouseApp(App):
     def build(self):

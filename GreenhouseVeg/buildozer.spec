@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy, pyjnius, pyserial, usb4a
+requirements = kivy, pyjnius, usb4a, pyserial
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -138,7 +138,7 @@ fullscreen = 0
 # android.apptheme = "@android:style/Theme.NoTitleBar"
 
 # (list) Pattern to whitelist for the whole project
-#android.whitelist =
+android.whitelist = lib-dynload/termios.so
 
 # (str) Path to a custom whitelist file
 #android.whitelist_src =
@@ -190,7 +190,7 @@ fullscreen = 0
 #android.ouya.icon.filename = %(source.dir)s/data/ouya_icon.png
 
 # (str) XML file to include as an intent filters in <activity> tag
-#android.manifest.intent_filters =
+android.manifest.intent_filters = intent-filter.xml 
 
 # (str) launchMode to set for the main activity
 #android.manifest.launch_mode = standard
@@ -339,7 +339,7 @@ warn_on_root = 1
 #    and extend the excluded directories to remove the HD content.
 #
 #[app@demo]
-#title = My Application (demo)
+#title = Greenhouse (demo)
 #
 #[app:source.exclude_patterns@demo]
 #images/hd/*

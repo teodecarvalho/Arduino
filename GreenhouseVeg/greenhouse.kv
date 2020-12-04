@@ -1,7 +1,7 @@
 <Button>
-    font_size: 15
+    font_size: 40
 <TextInput>
-    font_size: 15
+    font_size: 40
 
 <GreenHouseWidget>
     orientation: "vertical"
@@ -72,9 +72,17 @@
             on_release: root.update_parameter("irrigtime")
         TextInput:
             id: irrigtime_text_input
-    Button:
-        size_hint: .3, .2
-        pos_hint: {"center_x":.5, "top": root.top - root.height + .2}
-        id: save_permanent
-        text: "Commit changes"
-        background_color: (1, 0, 0, .5)
+        Button:
+            #size_hint: .5, .2
+            #pos_hint: {"center_x":.5, "top": root.top - root.height + .2}
+            id: save_permanent
+            text: "Commit changes"
+            background_color: (0, 1, 0, .5)
+            on_release: root.commit_changes()
+        Button:
+            #size_hint: .5, .2
+            #pos_hint: {"center_x":.5, "top": root.top - root.height + .2}
+            id: connnect
+            text: "Connect device"
+            background_color: (0, 1, 0, .5)
+            on_release: root.connect_usb()
