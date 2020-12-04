@@ -1,0 +1,80 @@
+<Button>
+    font_size: 15
+<TextInput>
+    font_size: 15
+
+<GreenHouseWidget>
+    orientation: "vertical"
+    GridLayout:
+        padding: 10
+        spacing: 10
+        cols: 2
+        size_hint: 1, .8
+        Button:
+            id: drysoil_button
+            text: "Dry soil:"
+            on_release: root.update_parameter("drysoil")
+        TextInput:
+            id: drysoil_text_input
+
+        Button:
+            id: wetsoil_button
+            text: "Wet soil:"
+            on_release: root.update_parameter("wetsoil")
+        TextInput:
+            id: wetsoil_text_input
+
+        Button:
+            id: minirriginterval_button
+            text: "Minimal interval between \n irrigations in hours (dec):"
+            on_release: root.update_parameter("minirriginterval")
+        TextInput:
+            id: minirriginterval_text_input
+
+        Button:
+            id: startlight_button
+            text: "Hour to start light (decimal):"
+            on_release: root.update_parameter("startlight")
+        TextInput:
+            id: startlight_text_input
+
+        Button:
+            id: stoplight_button
+            text: "Hour to stop light:"
+            on_release: root.update_parameter("stoplight")
+        TextInput:
+            id: stoplight_text_input
+
+        Button:
+            id: lowtemp_button
+            text: "Low temperature:"
+            on_release: root.update_parameter("lowtemp")
+        TextInput:
+            id: lowtemp_text_input
+
+        Button:
+            id: hightemp_button
+            text: "High Temperature:"
+            on_release: root.update_parameter("hightemp")
+        TextInput:
+            id: hightemp_text_input
+
+        Button:
+            id: minsoilmoist_button
+            text: "Minimal soil \n moisture (0-100):"
+            on_release: root.update_parameter("minsoilmoist")
+        TextInput:
+            id: minsoilmoist_text_input
+
+        Button:
+            id: irrigtime_button
+            text: "Irrigation duration \n in hours (decimal) "
+            on_release: root.update_parameter("irrigtime")
+        TextInput:
+            id: irrigtime_text_input
+    Button:
+        size_hint: .3, .2
+        pos_hint: {"center_x":.5, "top": root.top - root.height + .2}
+        id: save_permanent
+        text: "Commit changes"
+        background_color: (1, 0, 0, .5)
