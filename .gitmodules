@@ -1,0 +1,6 @@
+[submodule "GreenhouseVeg/usb4a"]
+	path = GreenhouseVeg/usb4a
+	url = https://github.com/jacklinquan/usb4a.git
+[submodule "GreenhouseVeg/usbserial4a"]
+	path = GreenhouseVeg/usbserial4a
+	url = https://github.com/jacklinquan/usbserial4a.git
