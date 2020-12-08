@@ -38,23 +38,26 @@ class GreenhouseWidget(BoxLayout):
 
     def update_parameter(self, parameter):
         try:
-            if(parameter in ["minirriginterval", "startlight", "stoplight", "irrigtime"]):
-                value = float(self.ids[parameter + "_text_input"].text)
-            else:
-                value = int(self.ids[parameter + "_text_input"].text)
-        except ValueError:
-            self.handle_wrong_input()
-            return
-        cmd = f"{self.switch_parameters[parameter]}{value}"
-        while True:
-            self.send_cmd(f"<{cmd}>")
-            msg = self.rec_msg()
-            time.sleep(1)
-            print("Trying to update parameter!")
-            if cmd in msg:
-                break
-        self.populate_params()
-        self.ids[parameter + "_button"].text += " (ok)"
+            try:
+                if(parameter in ["minirriginterval", "startlight", "stoplight", "irrigtime"]):
+                    value = float(self.ids[parameter + "_text_input"].text)
+                else:
+                    value = int(self.ids[parameter + "_text_input"].text)
+            except ValueError:
+                self.handle_wrong_input()
+                return
+            cmd = f"{self.switch_parameters[parameter]}{value}"
+            while True:
+                self.send_cmd(f"<{cmd}>")
+                msg = self.rec_msg()
+                time.sleep(1)
+                print("Trying to update parameter!")
+                if cmd in msg:
+                    break
+            self.populate_params()
+            self.ids[parameter + "_button"].text += " (ok)"
+        except:
+            self.show_popup("Opss!", "Something went wrong. Try again!")
 
     def get_readings(self):
         msg = None
