@@ -86,6 +86,7 @@ void setup() {
   digitalWrite(pinSolenoid, HIGH);
   digitalWrite(pinCooler, HIGH);
   now = rtc.now();
+  Serial.println("Ready");
 }
 
 void loop() {
@@ -109,7 +110,8 @@ void loop() {
   if(msg[0] == 's' && msg[1] == '9') s9(); // Update irrigTime
   if(msg[0] == 's' && msg[1] == 'a') updateEEPROM(); // Update EEPROM
   if(msg[0] == 's' && msg[1] == 'p') showParameters(); // Show all parameters
-  if(msg[0] == 's' && msg[1] == 'r') showReadings(); // Show all sensor readings  
+  if(msg[0] == 's' && msg[1] == 'r') showReadings(); // Show all sensor readings
+  if(msg[0] == 'p' && msg[1] == 'p') showParametersPython(); // Show all sensor readings in a format readable by the python script
 }
 
 void checkLight(){
@@ -335,6 +337,28 @@ void showParameters(){
   Serial.print("Minimal soil moisture (%): ");
   Serial.println(minSoilMoist);
   Serial.print("Irrigation time: ");
+  Serial.println(irrigTime, 4);
+  clearMsg();
+}
+
+void showParametersPython(){
+  Serial.print("drysoil:");
+  Serial.println(drySoil);
+  Serial.print("wetsoil:");
+  Serial.println(wetSoil);
+  Serial.print("minirriginterval:");
+  Serial.println(minIrrigInterval, 4);
+  Serial.print("startlight:");
+  Serial.println(startLight, 4);
+  Serial.print("stoplight:");
+  Serial.println(stopLight, 4);
+  Serial.print("lowtemp:");
+  Serial.println(lowTemp);
+  Serial.print("hightemp:");
+  Serial.println(highTemp);
+  Serial.print("minsoilmoist:");
+  Serial.println(minSoilMoist);
+  Serial.print("irrigtime:");
   Serial.println(irrigTime, 4);
   clearMsg();
 }

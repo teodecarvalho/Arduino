@@ -13,6 +13,23 @@ class USBdevice():
         except NameError:
             print("Device not found!")
 
+    def read(self):
+        msg = self.serial_port.read_all()
+        print(msg)
+        try:
+            return bytes(msg).decode('utf8')
+        except:
+            print("Failed to parse string:", msg)
+
+    def is_open(self):
+        return self.serial_port.is_open
+
+    def write(self, cmd):
+        self.serial_port.write(cmd.encode())
+
+    def flush(self):
+        self.serial_port.flushInput()
+
     def connect_usb(self):
         if platform == "android":
             self.get_usb_devices()

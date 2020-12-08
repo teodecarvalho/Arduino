@@ -82,7 +82,7 @@
         Button:
             #size_hint: .5, .2
             #pos_hint: {"center_x":.5, "top": root.top - root.height + .2}
-            id: connnect
-            text: "Connect device"
+            id: show_readings
+            text: "Show Readings"
             background_color: (0, 1, 0, .5)
-            on_release: root.connect_usb()
+            on_release: root.show_readings()
