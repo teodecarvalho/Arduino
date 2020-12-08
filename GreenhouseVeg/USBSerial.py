@@ -14,8 +14,13 @@ class USBdevice():
             print("Device not found!")
 
     def read(self):
-        msg = self.serial_port.read_all()
-        print(msg)
+        while True:
+            try:
+                msg = self.serial_port.read_all()
+                print(msg)
+                break
+            except:
+                pass
         try:
             return bytes(msg).decode('utf8')
         except:
@@ -25,17 +30,27 @@ class USBdevice():
         return self.serial_port.is_open
 
     def write(self, cmd):
-        self.serial_port.write(cmd.encode())
+        while True:
+            try:
+                self.serial_port.write(cmd.encode())
+                break
+            except:
+                pass
 
     def flush(self):
         self.serial_port.flushInput()
 
     def connect_usb(self):
-        if platform == "android":
-            self.get_usb_devices()
-            port = self.usb_device.getDeviceName()
-            self.serial_port = serial4a.get_serial_port(
-                port, 9600, 8, 'N', 1)
-        else:
-            port = [port for port in glob('/dev/tty.*') if "usbserial" in port][0] # Only works on Mac
-            self.serial_port = serial.Serial(port, 9600, timeout=3)
+        while True:
+            try:
+                if platform == "android":
+                    self.get_usb_devices()
+                    port = self.usb_device.getDeviceName()
+                    self.serial_port = serial4a.get_serial_port(
+                        port, 9600, 8, 'N', 1)
+                else:
+                    port = [port for port in glob('/dev/tty.*') if "usbserial" in port][0] # Only works on Mac
+                    self.serial_port = serial.Serial(port, 9600, timeout=3)
+                break
+            except:
+                pass

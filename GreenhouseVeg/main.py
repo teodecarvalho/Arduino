@@ -75,7 +75,8 @@ class GreenhouseWidget(BoxLayout):
     def show_readings(self):
         readings = "\n".join(self.get_readings())
         self.show_popup(title = "Current readings", msg = readings)
-
+        #self.send_cmd("<of>")
+        
     def get_params(self):
         msg = None
         while True:
@@ -116,6 +117,7 @@ class GreenhouseWidget(BoxLayout):
     
     def commit_changes(self):
         self.send_cmd("<sa>")
+        #self.send_cmd("<on>")
 
 class GreenhouseApp(App):
     def build(self):
